@@ -28,45 +28,9 @@ $aModule = array(
                         'article_jxattredit.tpl' => 'jxattredit/views/admin/tpl/article_jxattredit.tpl'
                         ),
     'blocks' => array(
-    ),
+                        ),
     'settings' => array(
-    )
-    /*'settings' => array(
-                        array(
-                            'group' => 'OXPROBS_ARTICLESETTINGS', 
-                            'name'  => 'sOxProbsEANField', 
-                            'type'  => 'select', 
-                            'value' => 'oxean',
-                            'constrains' => 'oxean|oxdistean', 
-                            'position' => 0 
-                            ),
-                        array(
-                            'group' => 'OXPROBS_ARTICLESETTINGS', 
-                            'name'  => 'sOxProbsMinDescLen', 
-                            'type'  => 'str', 
-                            'value' => '15'
-                            ),
-                        array(
-                            'group' => 'OXPROBS_ARTICLESETTINGS', 
-                            'name'  => 'sOxProbsBPriceMin',  
-                            'type'  => 'str', 
-                            'value' => '0.5'
-                            ),
-                        array(
-                            'group' => 'OXPROBS_ARTICLESETTINGS', 
-                            'name'  => 'sOxProbsMaxActionTime',  
-                            'type'  => 'str', 
-                            'value' => '14'
-                            ),
-                        array(
-                            'group' => 'OXPROBS_PICTURESETTINGS', 
-                            'name'  => 'sOxProbsPictureDirs',  
-                            'type'  => 'select', 
-                            'value' => 'master',
-                            'constrains' => 'master|generated', 
-                            'position' => 0 
-                            ),
-                        )*/
+                        )
     );
 
 ?>
