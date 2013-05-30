@@ -22,7 +22,7 @@
  * @version   SVN: $Id: oxattrs.php 27134 2010-04-09 13:50:28Z arvydas $
  */
 
-class article_jxattredit extends oxAdminDetails
+class article_jxattredit extends oxAdminView
 {
 
     protected $_sThisTemplate = "article_jxattredit.tpl";
