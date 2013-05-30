@@ -26,11 +26,11 @@ $aModule = array(
                         ),
     'templates' => array(
                         'article_jxattredit.tpl' => 'jxattredit/views/admin/tpl/article_jxattredit.tpl'
-                        ),
+                        )/*,
     'blocks' => array(
                         ),
     'settings' => array(
-                        )
+                        )*/
     );
 
 ?>
