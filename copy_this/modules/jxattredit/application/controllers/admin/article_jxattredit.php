@@ -1,6 +1,6 @@
 <?php
 /**
- *    This file is part of OXID eShop Community Edition.
+ *    This file is part of the module jxAttrEdit for OXID eShop Community Edition.
  *
  *    OXID eShop Community Edition is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -15,11 +15,10 @@
  *    You should have received a copy of the GNU General Public License
  *    along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @link      http://www.oxid-esales.com
- * @package   admin
- * @copyright (C) OXID eSales AG 2003-2010
- * @version OXID eShop CE
- * @version   SVN: $Id: oxattrs.php 27134 2010-04-09 13:50:28Z arvydas $
+ * @link      https://github.com/job963/oxProbs
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ * @copyright (C) Joachim Barthel 2012-2013
+ *
  */
 
 class article_jxattredit extends oxAdminView
