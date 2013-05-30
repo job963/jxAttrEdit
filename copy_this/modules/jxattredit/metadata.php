@@ -10,7 +10,7 @@ $sMetadataVersion = '1.0';
  */
 $aModule = array(
     'id'           => 'jxattredit',
-    'title'        => 'jxAttrEdit - OXID Product Attibute Editor',
+    'title'        => 'jxAttrEdit - Product Attibute Editor',
     'description'  => array(
                         'de' => 'Attribut Editor für Produkte.',
                         'en' => 'Attribute Editor for Products.'
@@ -24,10 +24,10 @@ $aModule = array(
         'oxadminview' => array('jxattredit/application/controllers/admin/article_jxattredit'
                                   )*/
                         ),
-    'files' => array(
+    'files'        => array(
                         'article_jxattredit' => 'jxattredit/application/controllers/admin/article_jxattredit.php'
                         ),
-    'templates' => array(
+    'templates'    => array(
                         'article_jxattredit.tpl' => 'jxattredit/views/admin/tpl/article_jxattredit.tpl'
                         )/*,
     'blocks' => array(
