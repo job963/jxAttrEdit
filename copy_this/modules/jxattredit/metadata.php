@@ -20,9 +20,7 @@ $aModule = array(
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxAttrEdit',
     'email'        => 'jbarthel@qualifire.de',
-    'extend'       => array(/*
-        'oxadminview' => array('jxattredit/application/controllers/admin/article_jxattredit'
-                                  )*/
+    'extend'       => array(
                         ),
     'files'        => array(
         'article_jxattredit' => 'jxattredit/application/controllers/admin/article_jxattredit.php'
