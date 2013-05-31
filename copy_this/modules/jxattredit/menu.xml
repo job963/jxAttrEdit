@@ -4,8 +4,6 @@
         <MAINMENU id="mxmanageprod">
             <SUBMENU id="mxarticles" cl="article" list="article_list">
                 <TAB id="tbclarticle_attrs" cl="article_jxattredit" />
-                <BTN id="article_new" />
-                <BTN id="article_preview" />
             </SUBMENU>
         </MAINMENU>
     </OXMENU>
