@@ -32,6 +32,13 @@ function editThis( sID )
     [{assign var="readonly" value=""}]
 [{/if}]
 
+[{capture name="subtablehead"}]
+    <tr>
+        <td class="listheader" width="25%">[{ oxmultilang ident="ATTRIBUTE_LIST_MENUSUBITEM" }]</td>
+        <td class="listheader" width="45%"><span style="float:left; display:block; width:95%;">[{ oxmultilang ident="ARTICLE_ATTRIBS_VALUE" }]</span></td>
+        <td class="listheader" width="30%"><span style="float:left; display:block; width:95%;">[{ oxmultilang ident="ARTICLE_ATTRIBS_PROPOSAL" }]</span></td>
+    </tr>
+[{/capture}]
 
 <form name="transfer" id="transfer" action="[{ $shop->selflink }]" method="post">
     [{ $shop->hiddensid }]
@@ -55,67 +62,55 @@ function editThis( sID )
 
     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr>
        <td valign="top" style="width:49%;">
-    <table cellspacing="0" cellpadding="0" border="0">
-        <tr>
-            <td class="listheader">[{ oxmultilang ident="ATTRIBUTE_LIST_MENUSUBITEM" }]</td>
-            <td class="listheader">
-                <span style="float:left; display:block; width:250px;">[{ oxmultilang ident="ARTICLE_ATTRIBS_VALUE" }]</span>
-                <span style="float:left; display:block;">[{ oxmultilang ident="ARTICLE_ATTRIBS_PROPOSAL" }]</span>
-            </td>
-        </tr>
-        [{foreach name=outer item=Attribute from=$aAttrList}]
-            [{ cycle values="listitem,listitem2" assign="listclass" }]
-            [{ assign var="rownum" value=$rownum+1 }]
-            [{if $rownum == $nAttrHalf}]
-                </table>
-                </td>
-                <td>&nbsp;</td>
-                <td valign="top" style="width:49%;">
-                <table cellspacing="0" cellpadding="0" border="0">
-                    <tr>
-                        <td class="listheader">[{ oxmultilang ident="ATTRIBUTE_LIST_MENUSUBITEM" }]</td>
-                        <td class="listheader">
-                            <span style="float:left; display:block; width:250px;">[{ oxmultilang ident="ARTICLE_ATTRIBS_VALUE" }]</span>
-                            <span style="float:left; display:block;">[{ oxmultilang ident="ARTICLE_ATTRIBS_PROPOSAL" }]</span>
-                        </td>
-                    </tr>
-            [{/if}]
+       <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
+            [{$smarty.capture.subtablehead}]
+            [{foreach name=outer item=Attribute from=$aAttrList}]
+                [{ cycle values="listitem,listitem2" assign="listclass" }]
+                [{ assign var="rownum" value=$rownum+1 }]
+                [{if $rownum == $nAttrHalf}]
+                    </table>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td valign="top" style="width:49%;">
+                    <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
+                        [{$smarty.capture.subtablehead}]
+                [{/if}]
+                <tr>
+                    <td class="[{ $listclass }]">
+                        <input type="hidden" name="oxattrid_[{$rownum}]" value="[{$Attribute.oxid}]">
+                        <input type="hidden" name="oxvalueid_[{$rownum}]" value="[{$Attribute.oxvalueid}]">
+                        &nbsp;[{ $Attribute.oxtitle }]&nbsp;&nbsp;
+                    </td>
+                    <td class="[{ $listclass }]">
+                        <input type="text" size="30" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
+                               style="width:95%" onChange="[{$onChangeStyle}]">
+                    </td>
+                    <td class="[{ $listclass }]">
+                        <select style="width:95%;" onchange="document.getElementById('attrval_[{$rownum}]').value=this.options[this.selectedIndex].value;
+                            document.getElementById('attrval_[{$rownum}]').style.color='blue';document.getElementById('attrval_[{$rownum}]').style.fontWeight='bold';">
+                            <option value=""></option>
+                            [{foreach name=outer2 item=AttrValue from=$Attribute.oxvalues}]
+                                <option value="[{$AttrValue}]">[{$AttrValue}]</option>
+                            [{/foreach}]
+                        </select>
+                    </td>
+                </tr>
+            [{/foreach}]
+            <input type="hidden" name="rownum" value="[{$rownum}]">
+
             <tr>
-                <td class="[{ $listclass }]">
-                    <input type="hidden" name="oxattrid_[{$rownum}]" value="[{$Attribute.oxid}]">
-                    <input type="hidden" name="oxvalueid_[{$rownum}]" value="[{$Attribute.oxvalueid}]">
-                    [{ $Attribute.oxtitle }]
-                </td>
-                <td class="[{ $listclass }]">
-                    <input type="text" size="30" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
-                           style="width:200px" onChange="[{$onChangeStyle}]">
-                    <select style="width:200px;" onchange="document.getElementById('attrval_[{$rownum}]').value=this.options[this.selectedIndex].value;
-                        document.getElementById('attrval_[{$rownum}]').style.color='blue';document.getElementById('attrval_[{$rownum}]').style.fontWeight='bold';">
-                        <option value=""></option>
-                        [{foreach name=outer2 item=AttrValue from=$Attribute.oxvalues}]
-                            <option value="[{$AttrValue}]">[{$AttrValue}]</option>
-                            <!--option value="value 2">Wert 2</option>
-                            <option value="value 3">Wert 3</option-->
-                        [{/foreach}]
-                    </select>
+                <td colspan="2" align="right">&nbsp;
                 </td>
             </tr>
-        [{/foreach}]
-        <input type="hidden" name="rownum" value="[{$rownum}]">
+            <tr>
+                <td colspan="2" align="right">
+                  <input class="edittext" type="submit" 
+                         onClick="document.forms['allattredit'].elements['parentvarname'].value = document.forms['search'].elements['editval[oxarticles__oxvarname]'].value;" 
+                         value=" [{ oxmultilang ident="ARTICLE_ATTRIBUTE_SAVE" }]" [{ $readonly }]>
+                </td>
+            </tr>
 
-        <tr>
-            <td colspan="2" align="right">&nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right">
-              <input class="edittext" type="submit" 
-                     onClick="document.forms['allattredit'].elements['parentvarname'].value = document.forms['search'].elements['editval[oxarticles__oxvarname]'].value;" 
-                     value=" [{ oxmultilang ident="ARTICLE_ATTRIBUTE_SAVE" }]" [{ $readonly }]>
-            </td>
-        </tr>
-
-    </table>
+        </table>
     </td></tr></table>
 </form>
 
