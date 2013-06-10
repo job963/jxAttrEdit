@@ -15,7 +15,7 @@
  *    You should have received a copy of the GNU General Public License
  *    along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @link      https://github.com/job963/oxProbs
+ * @link      https://github.com/job963/jxAttrEdit
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  * @copyright (C) Joachim Barthel 2012-2013
  *
@@ -25,6 +25,7 @@ class article_jxattredit extends oxAdminView
 {
 
     protected $_sThisTemplate = "article_jxattredit.tpl";
+    
     /**
      * Executes parent method parent::render(), passes data to Smarty engine
      * and returns name of template file "article_jxattredit.tpl".
