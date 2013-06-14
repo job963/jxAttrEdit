@@ -60,6 +60,13 @@ function editThis( sID )
     [{ assign var="onChangeStyle" value="this.style.color='blue';this.style.fontWeight='bold';" }]
     [{ assign var="onSelectChange" value="var txtbox = document.getElementById('show');" }]
 
+    <div style="font-weight:bold; padding-bottom:6px;">
+    [{ if $oxparentid }]
+        [{$edit->oxarticles__oxartnum->value}] - [{ $parentarticle->oxarticles__oxtitle->value}], [{$edit->oxarticles__oxvarselect->value}]
+    [{else}]
+        [{$edit->oxarticles__oxartnum->value}] - [{$edit->oxarticles__oxtitle->value}]
+    [{/if}]
+    </div>
     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr>
        <td valign="top" style="width:49%;">
        <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
