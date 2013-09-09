@@ -72,36 +72,30 @@ class article_jxattredit extends oxAdminView
 
             $sShopID = $myConfig->getShopID();
 
-            $sSql1 = "SELECT oxid, oxtitle FROM oxattribute a ORDER BY oxtitle";
+            if ( $this->_iEditLang == 0 )
+                $sOxTitle = 'oxtitle';
+            else
+                $sOxTitle = 'oxtitle_' . $this->_iEditLang;
+            $sSql1 = "SELECT oxid, $sOxTitle AS oxtitle FROM oxattribute a ORDER BY oxtitle";
             $aAttrList = array();
             $i = 0;
             $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
             $rs1 = $oDb->Execute($sSql1);
+
+            if ( $this->_iEditLang == 0 )
+                $sOxValue = 'oxvalue';
+            else
+                $sOxValue = 'oxvalue_' . $this->_iEditLang;
             while (!$rs1->EOF) {
-                /////array_push($aAttrList, $rs1->fields);
-                //echo $rs1->fields['oxid'].'/';
-                $sSql2 = "SELECT DISTINCT oxvalue FROM oxobject2attribute WHERE oxattrid = '" . $rs1->fields['oxid'] . "' ORDER BY OXVALUE";
+                $sSql2 = "SELECT DISTINCT $sOxValue AS oxvalue FROM oxobject2attribute WHERE oxattrid = '" . $rs1->fields['oxid'] . "' ORDER BY $sOxValue ";
                 $aAttrValues = array();
                 $rs2 = $oDb->Execute($sSql2);
-                /*echo '<hr><pre>';
-                print_r($rs2);
-                echo '</pre>';*/
                 while (!$rs2->EOF) {
-                    //$aAttrList[$i]['oxvalues']
-                    //echo $rs2->fields['oxvalue'].'<br/>';
                     array_push($aAttrValues, $rs2->fields['oxvalue']);
                     $rs2->MoveNext();
                 }
-                /*echo '<hr><pre>';
-                print_r($aAttrValues);
-                echo '</pre>';
-                echo '<hr>';*/
-                $sSql3 = "SELECT oxid AS voxid, oxvalue FROM oxobject2attribute WHERE oxobjectid = '$soxId' AND oxattrid = '" . $rs1->fields['oxid'] . "' ";
-                //echo '<hr>'.$sSql3.'<hr>';
+                $sSql3 = "SELECT oxid AS voxid, $sOxValue AS oxvalue FROM oxobject2attribute WHERE oxobjectid = '$soxId' AND oxattrid = '" . $rs1->fields['oxid'] . "' ";
                 $rs3 = $oDb->Execute($sSql3);
-                /*echo '<hr><hr><pre>';
-                print_r($rs3);
-                echo '</pre>';*/
                 if (!$rs3->EOF) {
                     $ValueID = $rs3->fields['voxid'];
                     $ArtValue = $rs3->fields['oxvalue'];
@@ -118,9 +112,6 @@ class article_jxattredit extends oxAdminView
                 $i++;
                 $rs1->MoveNext();
             }
-            /*echo '<pre>';
-            print_r($aAttrList);
-            echo '</pre>';*/
             $nAttrHalf = round(($i+2)/2, PHP_ROUND_HALF_DOWN);
 
             $sSql = "SELECT a.oxtitle AS oxtitle, 'Testwert' as oxvalue FROM oxattribute a ORDER BY oxpos, oxtitle";
@@ -167,10 +158,15 @@ class article_jxattredit extends oxAdminView
             $sAttrValue = oxConfig::getParameter( "attrval_$i" );
             //echo " - ".$sValueID." - ".$sAttrID." - ".$sAttrValue." - <hr>";
             
+            if ( $this->_iEditLang == 0 )
+                $sOxValue = 'OXVALUE';
+            else
+                $sOxValue = 'OXVALUE_'.$this->_iEditLang;
+            
             $sSql = "";
             
             if (($sValueID != '') && ($sAttrValue != '')) {   //attribute exists and not empty value received --> update
-                $sSql = "UPDATE oxobject2attribute SET OXVALUE='$sAttrValue' WHERE OXID='$sValueID' ";
+                $sSql = "UPDATE oxobject2attribute SET $sOxValue='$sAttrValue' WHERE OXID='$sValueID' ";
             }
             
             if (($sValueID != '') && ($sAttrValue == '')) {   //attribute exists, but empty value --> delete from DB
@@ -179,7 +175,7 @@ class article_jxattredit extends oxAdminView
             
             if (($sValueID == '') && ($sAttrValue != '')) {   //attribute doesn't exists, value received --> insert new value
                 $sNewUid = oxUtilsObject::getInstance()->generateUID();
-                $sSql = "INSERT INTO oxobject2attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', '$sAttrValue', 0)";
+                $sSql = "INSERT INTO oxobject2attribute (OXID, OXOBJECTID, OXATTRID, $sOxValue, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', '$sAttrValue', 0)";
             }
             
             if (($sValueID == '') && ($sAttrValue == '')) {   //attribute doesn't exists, no value received --> do nothing

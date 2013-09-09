@@ -16,7 +16,7 @@ $aModule = array(
                         'en' => 'Attribute Editor for Products.'
                         ),
     'thumbnail'    => 'jxattredit.png',
-    'version'      => '0.2',
+    'version'      => '0.3 beta',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxAttrEdit',
     'email'        => 'jbarthel@qualifire.de',
