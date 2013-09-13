@@ -71,30 +71,57 @@ class article_jxattredit extends oxAdminView
             }
 
             $sShopID = $myConfig->getShopID();
+            $sOxvArticles = getViewName( 'oxarticles', $this->_iEditLang, $sShopID );
+            $sOxvAttribute = getViewName( 'oxattribute', $this->_iEditLang, $sShopID );
+            $sOxvObject2Attribute = getViewName( 'oxobject2attribute', $this->_iEditLang, $sShopID );
+            
+            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
 
-            if ( $this->_iEditLang == 0 )
-                $sOxTitle = 'oxtitle';
+            if ( $oArticle->oxarticles__oxparentid->value )
+                $sSrcId = $oArticle->oxarticles__oxparentid->value;
             else
-                $sOxTitle = 'oxtitle_' . $this->_iEditLang;
-            $sSql1 = "SELECT oxid, $sOxTitle AS oxtitle FROM oxattribute a ORDER BY oxtitle";
+                $sSrcId = $soxId;
+
+            $sSql = "SELECT oxid AS oxid, oxartnum AS oxartnum, "
+                    . "IF(oxparentid='', "
+                        ."oxtitle, "
+                        . "IF(oxtitle='', "
+                            ."CONCAT((SELECT b.oxtitle FROM $sOxvArticles b WHERE b.oxid='$sSrcId'), ' - ', oxvarselect), "
+                            ."CONCAT(oxtitle, ' - ', oxvarselect) "
+                        . ") "
+                    . ") AS oxtitle "
+                    . "FROM $sOxvArticles "
+                    . "WHERE "
+                        . "oxid='$sSrcId' "
+                        . "OR oxparentid='$sSrcId' "
+                    . "ORDER BY oxvarselect ";
+            $rs = $oDb->Execute($sSql);
+            $aProdList = array();
+            while (!$rs->EOF) {
+                array_push($aProdList, $rs->fields);
+                $rs->MoveNext();
+            }
+            
+            $sSql1 = "SELECT oxid AS oxid, oxtitle AS oxtitle FROM $sOxvAttribute a ORDER BY oxtitle";
             $aAttrList = array();
             $i = 0;
-            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
             $rs1 = $oDb->Execute($sSql1);
 
-            if ( $this->_iEditLang == 0 )
-                $sOxValue = 'oxvalue';
-            else
-                $sOxValue = 'oxvalue_' . $this->_iEditLang;
             while (!$rs1->EOF) {
-                $sSql2 = "SELECT DISTINCT $sOxValue AS oxvalue FROM oxobject2attribute WHERE oxattrid = '" . $rs1->fields['oxid'] . "' ORDER BY $sOxValue ";
+                $sSql2 = "SELECT DISTINCT oxvalue AS oxvalue "
+                        . "FROM $sOxvObject2Attribute "
+                        . "WHERE oxattrid = '" . $rs1->fields['oxid'] . "' "
+                        . "ORDER BY oxvalue ";
                 $aAttrValues = array();
                 $rs2 = $oDb->Execute($sSql2);
                 while (!$rs2->EOF) {
                     array_push($aAttrValues, $rs2->fields['oxvalue']);
                     $rs2->MoveNext();
                 }
-                $sSql3 = "SELECT oxid AS voxid, $sOxValue AS oxvalue FROM oxobject2attribute WHERE oxobjectid = '$soxId' AND oxattrid = '" . $rs1->fields['oxid'] . "' ";
+                $sSql3 = "SELECT oxid AS voxid, oxvalue AS oxvalue "
+                        . "FROM $sOxvObject2Attribute "
+                        . "WHERE oxobjectid = '$soxId' "
+                            ."AND oxattrid = '" . $rs1->fields['oxid'] . "' ";
                 $rs3 = $oDb->Execute($sSql3);
                 if (!$rs3->EOF) {
                     $ValueID = $rs3->fields['voxid'];
@@ -123,6 +150,7 @@ class article_jxattredit extends oxAdminView
             }
 
             $oSmarty->assign("nAttrHalf", $nAttrHalf);
+            $oSmarty->assign("aProdList", $aProdList);
             $oSmarty->assign("aAttrList", $aAttrList);
             $oSmarty->assign("aAttributes", $aAttributes);
         }
@@ -146,8 +174,9 @@ class article_jxattredit extends oxAdminView
                 // --->  $sUid = oxUtilsObject::getInstance()->generateUID();
                 // --->  echo "-".$sUid."-<hr>";
                 //array_push($aAttrList, $rs1->fields);
-        $oDb = oxDb::getDb();
         $sOXID = oxConfig::getParameter( "oxid" );
+        $sOxvObject2Attribute = getViewName( 'oxobject2attribute', $this->_iEditLang, $sShopID );
+        $oDb = oxDb::getDb();
         
         $sSql = "";
         $iRows = oxConfig::getParameter( "rownum" );
@@ -156,26 +185,20 @@ class article_jxattredit extends oxAdminView
             $sValueID = oxConfig::getParameter( "oxvalueid_$i" );
             $sAttrID = oxConfig::getParameter( "oxattrid_$i" );
             $sAttrValue = oxConfig::getParameter( "attrval_$i" );
-            //echo " - ".$sValueID." - ".$sAttrID." - ".$sAttrValue." - <hr>";
-            
-            if ( $this->_iEditLang == 0 )
-                $sOxValue = 'OXVALUE';
-            else
-                $sOxValue = 'OXVALUE_'.$this->_iEditLang;
             
             $sSql = "";
             
             if (($sValueID != '') && ($sAttrValue != '')) {   //attribute exists and not empty value received --> update
-                $sSql = "UPDATE oxobject2attribute SET $sOxValue='$sAttrValue' WHERE OXID='$sValueID' ";
+                $sSql = "UPDATE $sOxvObject2Attribute SET oxvalue='$sAttrValue' WHERE oxid='$sValueID' ";
             }
             
             if (($sValueID != '') && ($sAttrValue == '')) {   //attribute exists, but empty value --> delete from DB
-                $sSql = "DELETE FROM oxobject2attribute WHERE OXID='$sValueID' ";
+                $sSql = "DELETE FROM oxobject2attribute WHERE oxid='$sValueID' ";
             }
             
             if (($sValueID == '') && ($sAttrValue != '')) {   //attribute doesn't exists, value received --> insert new value
                 $sNewUid = oxUtilsObject::getInstance()->generateUID();
-                $sSql = "INSERT INTO oxobject2attribute (OXID, OXOBJECTID, OXATTRID, $sOxValue, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', '$sAttrValue', 0)";
+                $sSql = "INSERT INTO $sOxvObject2Attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', '$sAttrValue', 0)";
             }
             
             if (($sValueID == '') && ($sAttrValue == '')) {   //attribute doesn't exists, no value received --> do nothing
@@ -184,7 +207,6 @@ class article_jxattredit extends oxAdminView
             
             // db zugriff
             if ($sSql != "") {
-                //echo $sSql.'<hr>';
                 $oDb->execute($sSql);
             }
         }
