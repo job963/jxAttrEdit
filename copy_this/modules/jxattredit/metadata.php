@@ -12,7 +12,7 @@ $aModule = array(
     'id'           => 'jxattredit',
     'title'        => 'jxAttrEdit - Product Attibute Editor',
     'description'  => array(
-                        'de' => 'Attribut Editor für Produkte.',
+                        'de' => 'Attribut-Editor für Produkte.',
                         'en' => 'Attribute Editor for Products.'
                         ),
     'thumbnail'    => 'jxattredit.png',
