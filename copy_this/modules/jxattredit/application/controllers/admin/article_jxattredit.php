@@ -169,10 +169,10 @@ class article_jxattredit extends oxAdminView
             $aParams = oxConfig::getParameter( "editval" );
         }
          
-// for later, on inserting new attribute values
-                //$sUid = $myUtilsObject->generateUid();
-                // --->  $sUid = oxUtilsObject::getInstance()->generateUID();
-                // --->  echo "-".$sUid."-<hr>";
+        // for later, on inserting new attribute values
+            //$sUid = $myUtilsObject->generateUid();
+            // --->  $sUid = oxUtilsObject::getInstance()->generateUID();
+            // --->  echo "-".$sUid."-<hr>";
                 //array_push($aAttrList, $rs1->fields);
         $sOXID = oxConfig::getParameter( "oxid" );
         $sOxvObject2Attribute = getViewName( 'oxobject2attribute', $this->_iEditLang, $sShopID );
@@ -181,7 +181,6 @@ class article_jxattredit extends oxAdminView
         $sSql = "";
         $iRows = oxConfig::getParameter( "rownum" );
         for ($i = 1; $i <= $iRows; $i++) {
-            // ... if exist or not
             $sValueID = oxConfig::getParameter( "oxvalueid_$i" );
             $sAttrID = oxConfig::getParameter( "oxattrid_$i" );
             $sAttrValue = oxConfig::getParameter( "attrval_$i" );
@@ -205,7 +204,7 @@ class article_jxattredit extends oxAdminView
                 // nothing to do 
             }
             
-            // db zugriff
+            // db changes
             if ($sSql != "") {
                 $oDb->execute($sSql);
             }
