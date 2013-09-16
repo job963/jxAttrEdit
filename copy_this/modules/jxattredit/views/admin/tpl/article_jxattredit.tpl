@@ -62,8 +62,6 @@ function JumpVariant(obj)
 </form>
 
 
-[{*debug*}]
-[{*<h3>[{ oxmultilang ident="ARTICLE_ATTRIBS_EDITOR" }]</h3>*}]
 <form name="allattredit" id="allattredit" action="[{ $shop->selflink }]" method="post">
     [{ $shop->hiddensid }]
     <input type="hidden" name="editlanguage" value="[{ $editlanguage }]">
@@ -75,11 +73,6 @@ function JumpVariant(obj)
     [{ assign var="onSelectChange" value="var txtbox = document.getElementById('show');" }]
 
     <div style="font-weight:bold; padding-bottom:6px;">
-    [{* if $oxparentid }]
-        [{$edit->oxarticles__oxartnum->value}] - [{ $parentarticle->oxarticles__oxtitle->value}], [{$edit->oxarticles__oxvarselect->value}]
-    [{else}]
-        [{$edit->oxarticles__oxartnum->value}] - [{$edit->oxarticles__oxtitle->value}]
-    [{/if*}]
         <select style="font-weight:bold;" onChange="Javascript:JumpVariant(this);">
         [{foreach name=prodlist item=Product from=$aProdList}]
         <option value="[{$Product.oxid}]" [{if $Product.oxid==$edit->oxarticles__oxid}]selected[{/if}]>[{$Product.oxartnum}] - [{$Product.oxtitle}]</option>
