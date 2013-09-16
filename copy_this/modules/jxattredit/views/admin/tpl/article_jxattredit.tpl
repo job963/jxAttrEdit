@@ -23,6 +23,20 @@ function editThis( sID )
     oSearch.actedit.value = 0;
     oSearch.submit();
 }
+
+function JumpVariant(obj)
+{
+    var oTransfer = document.getElementById("transfer");
+    oTransfer.oxid.value=obj.value;
+    oTransfer.cl.value='article_jxattredit';
+
+    //forcing edit frame to reload after submit
+    top.forceReloadingEditFrame();
+
+    var oSearch = parent.list.document.getElementById("search");
+    oSearch.oxid.value=obj.value;
+    oSearch.submit();
+}
 //-->
 </script>
 
@@ -60,6 +74,18 @@ function editThis( sID )
     [{ assign var="onChangeStyle" value="this.style.color='blue';this.style.fontWeight='bold';" }]
     [{ assign var="onSelectChange" value="var txtbox = document.getElementById('show');" }]
 
+    <div style="font-weight:bold; padding-bottom:6px;">
+    [{* if $oxparentid }]
+        [{$edit->oxarticles__oxartnum->value}] - [{ $parentarticle->oxarticles__oxtitle->value}], [{$edit->oxarticles__oxvarselect->value}]
+    [{else}]
+        [{$edit->oxarticles__oxartnum->value}] - [{$edit->oxarticles__oxtitle->value}]
+    [{/if*}]
+        <select style="font-weight:bold;" onChange="Javascript:JumpVariant(this);">
+        [{foreach name=prodlist item=Product from=$aProdList}]
+        <option value="[{$Product.oxid}]" [{if $Product.oxid==$edit->oxarticles__oxid}]selected[{/if}]>[{$Product.oxartnum}] - [{$Product.oxtitle}]</option>
+        [{/foreach}]
+        </select>
+    </div>
     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr>
        <td valign="top" style="width:49%;">
        <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
