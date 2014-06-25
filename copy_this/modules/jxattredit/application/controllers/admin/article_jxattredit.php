@@ -40,7 +40,10 @@ class article_jxattredit extends oxAdminView
         $oSmarty = oxUtilsView::getInstance()->getSmarty();
         $oSmarty->assign( "oViewConf", $this->_aViewData["oViewConf"]);
         $oSmarty->assign( "shop", $this->_aViewData["shop"]);
+        $myConfig = oxRegistry::get("oxConfig");
+
         
+        $nColumns = $myConfig->getConfigParam("sJxAttrEditNumberOfColumns");
         $this->_aViewData["edit"] = $oArticle = oxNew( "oxarticle");
         $soxId = oxConfig::getParameter( "oxid");
         
@@ -139,7 +142,10 @@ class article_jxattredit extends oxAdminView
                 $i++;
                 $rs1->MoveNext();
             }
-            $nAttrHalf = round(($i+2)/2, PHP_ROUND_HALF_DOWN);
+            //$nAttrHalf = round(($i+2)/2, PHP_ROUND_HALF_DOWN);
+            //echo 'anz: '.round(($i/4)+0.5, 0, PHP_ROUND_HALF_UP).'/'.$i .'/'.$nAttrSplit;
+            //------$nAttrSplit = round(($i/4)+0.5, 0, PHP_ROUND_HALF_UP);
+            $nAttrSplit = round(($i/$nColumns)+0.5, 0, PHP_ROUND_HALF_UP);
 
             $sSql = "SELECT a.oxtitle AS oxtitle, 'Testwert' as oxvalue FROM oxattribute a ORDER BY oxpos, oxtitle";
             $aAttributes = array();
@@ -149,7 +155,9 @@ class article_jxattredit extends oxAdminView
                 $rs->MoveNext();
             }
 
-            $oSmarty->assign("nAttrHalf", $nAttrHalf);
+            //$oSmarty->assign("nAttrHalf", $nAttrHalf);
+            $oSmarty->assign("nAttrSplit", $nAttrSplit);
+            $oSmarty->assign("nColumns", $nColumns);
             $oSmarty->assign("aProdList", $aProdList);
             $oSmarty->assign("aAttrList", $aAttrList);
             $oSmarty->assign("aAttributes", $aAttributes);

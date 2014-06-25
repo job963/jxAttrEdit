@@ -12,11 +12,11 @@ $aModule = array(
     'id'           => 'jxattredit',
     'title'        => 'jxAttrEdit - Product Attibute Editor',
     'description'  => array(
-                        'de' => 'Attribut-Editor für Produkte.',
+                        'de' => 'Attribut-Editor für Artikel.',
                         'en' => 'Attribute Editor for Products.'
                         ),
     'thumbnail'    => 'jxattredit.png',
-    'version'      => '0.3',
+    'version'      => '0.4',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxAttrEdit',
     'email'        => 'jbarthel@qualifire.de',
@@ -27,6 +27,14 @@ $aModule = array(
                         ),
     'templates'    => array(
         'article_jxattredit.tpl' => 'jxattredit/views/admin/tpl/article_jxattredit.tpl'
+                        ),
+    'settings' => array(
+                        array(
+                                'group' => 'JXATTREDIT_DISPLAY', 
+                                'name'  => 'sJxAttrEditNumberOfColumns', 
+                                'type'  => 'str', 
+                                'value' => '2'
+                                )
                         )
     );
 
