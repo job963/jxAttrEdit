@@ -36,16 +36,10 @@ class article_jxattredit extends oxAdminView
     {
         parent::render();
 
-        //$myConfig = $this->getConfig();
-        //$oSmarty = oxUtilsView::getInstance()->getSmarty();
-        //$oSmarty->assign( "oViewConf", $this->_aViewData["oViewConf"]);
-        //$oSmarty->assign( "shop", $this->_aViewData["shop"]);
         $myConfig = oxRegistry::get("oxConfig");
-
         
         $nColumns = $myConfig->getConfigParam("sJxAttrEditNumberOfColumns");
         $this->_aViewData["edit"] = $oArticle = oxNew( "oxarticle");
-        //$soxId = oxConfig::getParameter( "oxid");
         $soxId = $this->getConfig()->getRequestParameter( "oxid");
         
         if ( $soxId != "-1" && isset( $soxId)) {
@@ -143,9 +137,6 @@ class article_jxattredit extends oxAdminView
                 $i++;
                 $rs1->MoveNext();
             }
-            //$nAttrHalf = round(($i+2)/2, PHP_ROUND_HALF_DOWN);
-            //echo 'anz: '.round(($i/4)+0.5, 0, PHP_ROUND_HALF_UP).'/'.$i .'/'.$nAttrSplit;
-            //------$nAttrSplit = round(($i/4)+0.5, 0, PHP_ROUND_HALF_UP);
             $nAttrSplit = round(($i/$nColumns)+0.5, 0, PHP_ROUND_HALF_UP);
 
             $sSql = "SELECT a.oxtitle AS oxtitle, 'Testwert' as oxvalue FROM oxattribute a ORDER BY oxpos, oxtitle";
@@ -156,12 +147,6 @@ class article_jxattredit extends oxAdminView
                 $rs->MoveNext();
             }
 
-            //--$oSmarty->assign("nAttrHalf", $nAttrHalf);
-            //$oSmarty->assign("nAttrSplit", $nAttrSplit);
-            //$oSmarty->assign("nColumns", $nColumns);
-            //$oSmarty->assign("aProdList", $aProdList);
-            //$oSmarty->assign("aAttrList", $aAttrList);
-            //$oSmarty->assign("aAttributes", $aAttributes);
             $this->_aViewData["nAttrSplit"] = $nAttrSplit;
             $this->_aViewData["nColumns"] = $nColumns;
             $this->_aViewData["aProdList"] = $aProdList;
@@ -179,8 +164,6 @@ class article_jxattredit extends oxAdminView
      {
 
         if ( !isset( $sOXID ) && !isset( $aParams ) ) {
-            //$sOXID   = oxConfig::getParameter( "voxid" );
-            //$aParams = oxConfig::getParameter( "editval" );
             $sOXID   = $this->getConfig()->getRequestParameter( "voxid" );
             $aParams = $this->getConfig()->getRequestParameter( "editval" );
         }
@@ -190,18 +173,13 @@ class article_jxattredit extends oxAdminView
             // --->  $sUid = oxUtilsObject::getInstance()->generateUID();
             // --->  echo "-".$sUid."-<hr>";
                 //array_push($aAttrList, $rs1->fields);
-        //$sOXID = oxConfig::getParameter( "oxid" );
         $sOXID = $this->getConfig()->getRequestParameter( "oxid" );
         $sOxvObject2Attribute = getViewName( 'oxobject2attribute', $this->_iEditLang, $sShopID );
         $oDb = oxDb::getDb();
         
         $sSql = "";
-        //$iRows = oxConfig::getParameter( "rownum" );
         $iRows = $this->getConfig()->getRequestParameter( "rownum" );
         for ($i = 1; $i <= $iRows; $i++) {
-            //$sValueID = oxConfig::getParameter( "oxvalueid_$i" );
-            //$sAttrID = oxConfig::getParameter( "oxattrid_$i" );
-            //$sAttrValue = oxConfig::getParameter( "attrval_$i" );
             $sValueID = $this->getConfig()->getRequestParameter( "oxvalueid_$i" );
             $sAttrID = $this->getConfig()->getRequestParameter( "oxattrid_$i" );
             $sAttrValue = $this->getConfig()->getRequestParameter( "attrval_$i" );
