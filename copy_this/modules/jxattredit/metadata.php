@@ -26,7 +26,7 @@ $aModule = array(
         'article_jxattredit' => 'jxattredit/application/controllers/admin/article_jxattredit.php'
                         ),
     'templates'    => array(
-        'article_jxattredit.tpl' => 'jxattredit/views/admin/tpl/article_jxattredit.tpl'
+        'article_jxattredit.tpl' => 'jxattredit/application/views/admin/tpl/article_jxattredit.tpl'
                         ),
     'settings' => array(
                         array(
