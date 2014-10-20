@@ -61,9 +61,18 @@ function JumpVariant(obj)
     <input type="hidden" name="editlanguage" value="[{ $editlanguage }]">
 </form>
 
-
-[{*debug*}]
-[{*<h3>[{ oxmultilang ident="ARTICLE_ATTRIBS_EDITOR" }]</h3>*}]
+[{ assign var="colCount" value=$nColumns }]
+[{if $colCount == 2 }]
+    [{ assign var="colWidth" value="49" }]
+    [{ assign var="txtWidth" value="30" }]
+[{elseif $colCount == 3 }]
+    [{ assign var="colWidth" value="33" }]
+    [{ assign var="txtWidth" value="20" }]
+[{elseif $colCount == 4}]
+    [{ assign var="colWidth" value="24" }]
+    [{ assign var="txtWidth" value="15" }]
+[{/if}]
+[{ assign var="colCount" value="4" }]
 <form name="allattredit" id="allattredit" action="[{ $shop->selflink }]" method="post">
     [{ $shop->hiddensid }]
     <input type="hidden" name="editlanguage" value="[{ $editlanguage }]">
@@ -75,11 +84,6 @@ function JumpVariant(obj)
     [{ assign var="onSelectChange" value="var txtbox = document.getElementById('show');" }]
 
     <div style="font-weight:bold; padding-bottom:6px;">
-    [{* if $oxparentid }]
-        [{$edit->oxarticles__oxartnum->value}] - [{ $parentarticle->oxarticles__oxtitle->value}], [{$edit->oxarticles__oxvarselect->value}]
-    [{else}]
-        [{$edit->oxarticles__oxartnum->value}] - [{$edit->oxarticles__oxtitle->value}]
-    [{/if*}]
         <select style="font-weight:bold;" onChange="Javascript:JumpVariant(this);">
         [{foreach name=prodlist item=Product from=$aProdList}]
         <option value="[{$Product.oxid}]" [{if $Product.oxid==$edit->oxarticles__oxid}]selected[{/if}]>[{$Product.oxartnum}] - [{$Product.oxtitle}]</option>
@@ -87,17 +91,25 @@ function JumpVariant(obj)
         </select>
     </div>
     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr>
-       <td valign="top" style="width:49%;">
+       <td valign="top" style="width:[{$colWidth}]%;">
        <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
             [{$smarty.capture.subtablehead}]
+            [{ assign var="rownum" value=-1 }]
+            <colgroup>
+                <col width="[{$colWidth}]%">
+                <col width="*">
+                <col width="[{$colWidth}]%">
+                [{if $colCount>=3 }]<col width="*"><col width="[{$colWidth}]%">[{/if}]
+                [{if $colCount>=4 }]<col width="*"><col width="[{$colWidth}]%">[{/if}]
+            </colgroup>
             [{foreach name=outer item=Attribute from=$aAttrList}]
                 [{ cycle values="listitem,listitem2" assign="listclass" }]
                 [{ assign var="rownum" value=$rownum+1 }]
-                [{if $rownum == $nAttrHalf}]
+                [{if $rownum is div by $nAttrSplit && $rownum != 0}]
                     </table>
                     </td>
                     <td>&nbsp;</td>
-                    <td valign="top" style="width:49%;">
+                    <td valign="top" style="width:[{$colWidth}]%;">
                     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;">
                         [{$smarty.capture.subtablehead}]
                 [{/if}]
@@ -108,7 +120,7 @@ function JumpVariant(obj)
                         &nbsp;[{ $Attribute.oxtitle }]&nbsp;&nbsp;
                     </td>
                     <td class="[{ $listclass }]">
-                        <input type="text" size="30" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
+                        <input type="text" size="[{$txtWidth}]" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
                                style="width:95%" onChange="[{$onChangeStyle}]">
                     </td>
                     <td class="[{ $listclass }]">
