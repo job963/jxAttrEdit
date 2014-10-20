@@ -10,7 +10,7 @@ $aLang = array(
     'SHOP_MODULE_GROUP_JXATTREDIT_DISPLAY'         => 'Anzeige',
     'SHOP_MODULE_sJxAttrEditNumberOfColumns'       => 'Anzahl Spalten',
     
-    'charset'                     => 'ISO-8859-15',
+    'charset'                     => 'ISO-8859-15'
 );
 
 ?>
