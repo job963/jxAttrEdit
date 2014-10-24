@@ -179,7 +179,7 @@ class article_jxattredit extends oxAdminView
         
         $sSql = "";
         $iRows = $this->getConfig()->getRequestParameter( "rownum" );
-        for ($i = 1; $i <= $iRows; $i++) {
+        for ($i = 0; $i <= $iRows; $i++) {
             $sValueID = $this->getConfig()->getRequestParameter( "oxvalueid_$i" );
             $sAttrID = $this->getConfig()->getRequestParameter( "oxattrid_$i" );
             $sAttrValue = $this->getConfig()->getRequestParameter( "attrval_$i" );
