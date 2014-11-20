@@ -12,3 +12,4 @@ Tested with OXID versions 4.7, 4.8 and 4.9.
 
 ### Screenshot ###
 ![](https://github.com/job963/jxAttrEdit/raw/develop/docs/img/editattributes.jpg)
+
