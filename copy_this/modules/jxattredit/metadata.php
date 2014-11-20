@@ -3,7 +3,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '1.0';
+$sMetadataVersion = '1.1';
  
 /**
  * Module information
@@ -16,10 +16,10 @@ $aModule = array(
                         'en' => 'Attribute Editor for Products.'
                         ),
     'thumbnail'    => 'jxattredit.png',
-    'version'      => '0.4.1',
+    'version'      => '0.4.2',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxAttrEdit',
-    'email'        => 'jbarthel@qualifire.de',
+    'email'        => 'jobarthel@gmail.com',
     'extend'       => array(
                         ),
     'files'        => array(
