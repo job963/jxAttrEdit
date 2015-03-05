@@ -102,6 +102,7 @@ function JumpVariant(obj)
                 [{if $colCount>=3 }]<col width="*"><col width="[{$colWidth}]%">[{/if}]
                 [{if $colCount>=4 }]<col width="*"><col width="[{$colWidth}]%">[{/if}]
             </colgroup>
+
             [{foreach name=outer item=Attribute from=$aAttrList}]
                 [{ cycle values="listitem,listitem2" assign="listclass" }]
                 [{ assign var="rownum" value=$rownum+1 }]
@@ -120,7 +121,7 @@ function JumpVariant(obj)
                         &nbsp;[{ $Attribute.oxtitle }]&nbsp;&nbsp;
                     </td>
                     <td class="[{ $listclass }]">
-                        <input type="text" size="[{$txtWidth}]" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
+                        <input type="text" size="[{$txtWidth}]" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue|escape }]" 
                                style="width:95%" onChange="[{$onChangeStyle}]">
                     </td>
                     <td class="[{ $listclass }]">
@@ -128,7 +129,7 @@ function JumpVariant(obj)
                             document.getElementById('attrval_[{$rownum}]').style.color='blue';document.getElementById('attrval_[{$rownum}]').style.fontWeight='bold';">
                             <option value=""></option>
                             [{foreach name=outer2 item=AttrValue from=$Attribute.oxvalues}]
-                                <option value="[{$AttrValue}]">[{$AttrValue}]</option>
+                                <option value="[{$AttrValue|escape}]">[{$AttrValue}]</option>
                             [{/foreach}]
                         </select>
                     </td>
