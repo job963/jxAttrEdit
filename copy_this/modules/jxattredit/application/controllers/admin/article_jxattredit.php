@@ -17,7 +17,7 @@
  *
  * @link      https://github.com/job963/jxAttrEdit
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- * @copyright (C) Joachim Barthel 2012-2014
+ * @copyright (C) Joachim Barthel 2012-2015
  *
  */
 
@@ -182,12 +182,12 @@ class article_jxattredit extends oxAdminView
         for ($i = 0; $i <= $iRows; $i++) {
             $sValueID = $this->getConfig()->getRequestParameter( "oxvalueid_$i" );
             $sAttrID = $this->getConfig()->getRequestParameter( "oxattrid_$i" );
-            $sAttrValue = $this->getConfig()->getRequestParameter( "attrval_$i" );
+            $sAttrValue = $oDb->quote( $this->getConfig()->getRequestParameter( "attrval_$i" ) );
             
             $sSql = "";
             
             if (($sValueID != '') && ($sAttrValue != '')) {   //attribute exists and not empty value received --> update
-                $sSql = "UPDATE $sOxvObject2Attribute SET oxvalue='$sAttrValue' WHERE oxid='$sValueID' ";
+                $sSql = "UPDATE $sOxvObject2Attribute SET oxvalue=$sAttrValue WHERE oxid='$sValueID' ";
             }
             
             if (($sValueID != '') && ($sAttrValue == '')) {   //attribute exists, but empty value --> delete from DB
@@ -196,7 +196,7 @@ class article_jxattredit extends oxAdminView
             
             if (($sValueID == '') && ($sAttrValue != '')) {   //attribute doesn't exists, value received --> insert new value
                 $sNewUid = oxUtilsObject::getInstance()->generateUID();
-                $sSql = "INSERT INTO $sOxvObject2Attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', '$sAttrValue', 0)";
+                $sSql = "INSERT INTO $sOxvObject2Attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', $sAttrValue, 0)";
             }
             
             if (($sValueID == '') && ($sAttrValue == '')) {   //attribute doesn't exists, no value received --> do nothing
