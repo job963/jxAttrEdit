@@ -2,12 +2,12 @@
 /**
  *    This file is part of the module jxAttrEdit for OXID eShop Community Edition.
  *
- *    OXID eShop Community Edition is free software: you can redistribute it and/or modify
+ *    jxAttrEdit for OXID eShop Community Edition is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
  *
- *    OXID eShop Community Edition is distributed in the hope that it will be useful,
+ *    jxAttrEdit for OXID eShop Community Edition is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
@@ -17,7 +17,7 @@
  *
  * @link      https://github.com/job963/jxAttrEdit
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- * @copyright (C) Joachim Barthel 2012-2015
+ * @copyright (C) Joachim Barthel 2012-2017
  *
  */
 
@@ -30,7 +30,7 @@ class article_jxattredit extends oxAdminView
      * Executes parent method parent::render(), passes data to Smarty engine
      * and returns name of template file "article_jxattredit.tpl".
      *
-     * @return string
+     * @return string $this->_sThisTemplate     Name of template file
      */
     public function render()
     {
@@ -100,7 +100,10 @@ class article_jxattredit extends oxAdminView
                 $rs->MoveNext();
             }
             
-            $sSql1 = "SELECT oxid AS oxid, oxtitle AS oxtitle FROM $sOxvAttribute a ORDER BY oxtitle";
+            $sSql1 = "SELECT "
+                        . "oxid AS oxid, oxtitle AS oxtitle, oxdisplayinbasket AS oxdisplayinbasket "
+                    . "FROM $sOxvAttribute a "
+                    . "ORDER BY oxtitle";
             $aAttrList = array();
             $i = 0;
             $rs1 = $oDb->Execute($sSql1);
@@ -159,20 +162,13 @@ class article_jxattredit extends oxAdminView
 
      
      
-     
-     public function saveAllAttrs($sOXID = null, $aParams = null)
+     /**
+      * Saves all attributes of the currently selected article
+      * 
+      * return null
+      */
+     public function saveAllAttrs()
      {
-
-        if ( !isset( $sOXID ) && !isset( $aParams ) ) {
-            $sOXID   = $this->getConfig()->getRequestParameter( "voxid" );
-            $aParams = $this->getConfig()->getRequestParameter( "editval" );
-        }
-         
-        // for later, on inserting new attribute values
-            //$sUid = $myUtilsObject->generateUid();
-            // --->  $sUid = oxUtilsObject::getInstance()->generateUID();
-            // --->  echo "-".$sUid."-<hr>";
-                //array_push($aAttrList, $rs1->fields);
         $sOXID = $this->getConfig()->getRequestParameter( "oxid" );
         $sOxvObject2Attribute = getViewName( 'oxobject2attribute', $this->_iEditLang, $sShopID );
         $oDb = oxDb::getDb();

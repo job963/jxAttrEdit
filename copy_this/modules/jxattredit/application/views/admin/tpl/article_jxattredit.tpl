@@ -9,6 +9,7 @@ function loadLang(obj)
         langvar.value = obj.value;
     document.myedit.submit();
 }
+
 function editThis( sID )
 {
     var oTransfer = top.basefrm.edit.document.getElementById( "transfer" );
@@ -24,7 +25,7 @@ function editThis( sID )
     oSearch.submit();
 }
 
-function JumpVariant(obj)
+function switchVariant(obj)
 {
     var oTransfer = document.getElementById("transfer");
     oTransfer.oxid.value=obj.value;
@@ -37,6 +38,7 @@ function JumpVariant(obj)
     oSearch.oxid.value=obj.value;
     oSearch.submit();
 }
+
 //-->
 </script>
 
@@ -84,10 +86,16 @@ function JumpVariant(obj)
     [{ assign var="onSelectChange" value="var txtbox = document.getElementById('show');" }]
 
     <div style="font-weight:bold; padding-bottom:6px;">
-        <select style="font-weight:bold;" onChange="Javascript:JumpVariant(this);">
-        [{foreach name=prodlist item=Product from=$aProdList}]
-        <option value="[{$Product.oxid}]" [{if $Product.oxid==$edit->oxarticles__oxid}]selected[{/if}]>[{$Product.oxartnum}] - [{$Product.oxtitle}]</option>
-        [{/foreach}]
+        <select name="editvariant" style="font-weight:bold;" onChange="Javascript:switchVariant(this);">
+            [{foreach name=prodlist item=Product from=$aProdList}]
+                <option value="[{$Product.oxid}]" [{if $Product.oxid==$edit->oxarticles__oxid}]selected[{/if}]>[{$Product.oxartnum}] - [{$Product.oxtitle}]</option>
+            [{/foreach}]
+        </select>
+        
+        <select name="editlanguage" id="test_editlanguage" class="saveinnewlanginput" onChange="Javascript:document.allattredit.fnc.value='';document.allattredit.submit();" [{$custreadonly}]>
+            [{foreach from=$otherlang key=lang item=olang}]
+                <option value="[{ $lang }]"[{if $olang->selected}]SELECTED[{/if}]>[{ $olang->sLangDesc }]</option>
+            [{/foreach}]
         </select>
     </div>
     <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tr>
@@ -118,7 +126,7 @@ function JumpVariant(obj)
                     <td class="[{ $listclass }]">
                         <input type="hidden" name="oxattrid_[{$rownum}]" value="[{$Attribute.oxid}]">
                         <input type="hidden" name="oxvalueid_[{$rownum}]" value="[{$Attribute.oxvalueid}]">
-                        &nbsp;[{ $Attribute.oxtitle }]&nbsp;&nbsp;
+                        &nbsp;[{if $Attribute.oxdisplayinbasket}]<b>[{/if}][{ $Attribute.oxtitle }][{if $Attribute.oxdisplayinbasket}] *</b>[{/if}]&nbsp;&nbsp;
                     </td>
                     <td class="[{ $listclass }]">
                         <input type="text" size="[{$txtWidth}]" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue|escape }]" 
@@ -142,10 +150,11 @@ function JumpVariant(obj)
                 </td>
             </tr>
             <tr>
-                <td colspan="2" align="right">
-                  <input class="edittext" type="submit" 
+                <td colspan="2">
+                    <b>* [{ oxmultilang ident="ARTICLE_ATTRIBS_DISPLAYEDINBASKET" }]</b>
+                    <div style="display:inline-block;float:right;"><input class="edittext" type="submit" 
                          onClick="document.forms['allattredit'].elements['parentvarname'].value = document.forms['search'].elements['editval[oxarticles__oxvarname]'].value;" 
-                         value=" [{ oxmultilang ident="ARTICLE_ATTRIBUTE_SAVE" }]" [{ $readonly }]>
+                         value=" [{ oxmultilang ident="ARTICLE_ATTRIBUTE_SAVE" }]" [{ $readonly }]></div>
                 </td>
             </tr>
 

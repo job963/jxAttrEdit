@@ -8,8 +8,24 @@ Changes field values are marked with a different color for visualizing which of 
 
 If the product has variants you can switch to another variant or to the parent without choosing the main tab.
 
-Tested with OXID versions 4.7, 4.8 and 4.9. 
+Tested with OXID versions 4.7, 4.8, 4.9 and 4.10. 
+
 
 ### Screenshot ###
 ![](https://github.com/job963/jxAttrEdit/raw/develop/docs/img/editattributes.jpg)
 
+
+### History ###
+
+* **Release 0.3**
+  * Support for multi-language shops added  
+
+* **Release 0.4**
+  * Compatibility for 4.7-4.9 implemented
+  * Configurable number of columns
+
+* **Release 0.5**
+  * Translation changed to UTF-8
+  * Language switch added
+  * Number of colums as select box
+  * Highlighting of basket attributes
