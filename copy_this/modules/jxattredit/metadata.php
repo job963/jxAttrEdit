@@ -16,7 +16,7 @@ $aModule = array(
                         'en' => 'Attribute Editor for Products.'
                         ),
     'thumbnail'    => 'jxattredit.png',
-    'version'      => '0.4.5',
+    'version'      => '0.5.0',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxAttrEdit',
     'email'        => 'jobarthel@gmail.com',
@@ -32,8 +32,9 @@ $aModule = array(
                         array(
                                 'group' => 'JXATTREDIT_DISPLAY', 
                                 'name'  => 'sJxAttrEditNumberOfColumns', 
-                                'type'  => 'str', 
-                                'value' => '2'
+                                'type'  => 'select', 
+                                'value' => '2',
+                                'constraints' => '2|3|4'
                                 )
                         )
     );
