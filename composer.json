@@ -1,0 +1,39 @@
+{
+  "name": "proudcommerce/jxattredit",
+  "version": "1.0.0",
+  "description": "jxAttrEdit - Product Attibute Editor",
+  "type": "oxideshop-module",
+  "license": [
+    "proprietary"
+  ],
+  "authors": [
+    {
+      "name": "ProudCommerce",
+      "homepage": "https://www.proudcommerce.com/",
+      "email": "welcome@proudcommerce.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Joachim Barthel",
+      "homepage": "https://github.com/job963/jxAttrEdit",
+      "email": "jobarthel@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "oxid@bestlife.ag"
+  },
+  "require": {
+    "php": ">= 7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProudCommerce\\Jx\\AttrEdit\\": "../../../source/modules/jx/attredit"
+    }
+  },
+  "extra": {
+    "oxideshop": {
+      "target-directory": "jx/attredit"
+    }
+  }
+}

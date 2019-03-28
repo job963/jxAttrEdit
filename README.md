@@ -10,6 +10,10 @@ If the product has variants you can switch to another variant or to the parent w
 
 Tested with OXID versions 4.7, 4.8, 4.9 and 4.10. 
 
+## Install
+
+```composer require proudcommerce/jxattredit```
+
 
 ### Screenshot ###
 ![](https://github.com/job963/jxAttrEdit/raw/develop/docs/img/editattributes.jpg)
@@ -29,3 +33,6 @@ Tested with OXID versions 4.7, 4.8, 4.9 and 4.10.
   * Language switch added
   * Number of colums as select box
   * Highlighting of basket attributes
+
+* **Release 1.0.0**
+  * Migration to OXID 6

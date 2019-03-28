@@ -1,5 +1,0 @@
-Die gesamte Zipdatei muss, unter Beibehaltung der Ordnerstruktur, entpackt und alle Daten des Ordners copy_this direkt in das Hauptverzeichnis des Shops hochladen werden. 
-
-Anschließend ist das Modul noch im Admin-Bereich zu aktivieren. Wählen Sie dazu im Admin-Bereich das Menü "Erweiterungen - Module" aus. Dort das Modul auswählen und "Aktivieren" anklicken.
-
-Wechseln Sie nun in den Bereich "Artikel" und wählen Sie einen Artikel aus. Ganz rechts wird nun der neue Reiter "Attribut-Editor" angezeigt.
