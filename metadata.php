@@ -33,9 +33,9 @@ $aModule = array(
     ],
     'thumbnail' => 'jxattredit.png',
     'version' => '1.0.0',
-    'author' => 'Joachim Barthel, ProudCommerce',
-    'url' => 'http://www.proudcommerce.com',
-    'email' => 'module@proudcommerce.com',
+    'author' => 'Joachim Barthel, ProudCommerce, Zunderweb',
+    'url' => 'http://www.zunderweb.de',
+    'email' => 'info@zunderweb.de',
     'controllers' => [
         'article_jxattredit' => \ProudCommerce\Jx\AttrEdit\Application\Controllers\Admin\AttributeEdit::class,
     ],
