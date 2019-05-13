@@ -51,6 +51,7 @@ function fillAttrValues(checkbox){
         retvalue += checkedattrs[i].value;
     }
     input.value = retvalue;
+    input.onchange();
 }
 function showAttributes(elementId){
     var allattrvals = document.querySelectorAll(".attrvals");
