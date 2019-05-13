@@ -1,20 +1,4 @@
 <?php
-/**
- *
- * @package ##@@PACKAGE@@##
- * @version ##@@VERSION@@##
- * @link www.proudcommerce.com
- * @author Proud Sourcing <support@proudcommerce.com>
- * @copyright Proud Sourcing GmbH | 2019
- *
- * This Software is the property of Proud Sourcing GmbH
- * and is protected by copyright law, it is not freeware.
- *
- * Any unauthorized use of this software without a valid license
- * is a violation of the license agreement and will be
- * prosecuted by civil and criminal law.
- *
- **/
 
 /**
  * Metadata version
