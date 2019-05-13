@@ -1,10 +1,10 @@
 {
-  "name": "zunderweb/jxattredit",
+  "name": "zunderweb/oxid-jxattredit",
   "version": "1.0.0",
   "description": "jxAttrEdit - Product Attibute Editor",
   "type": "oxideshop-module",
   "license": [
-    "proprietary"
+    "GPL-3.0-only"
   ],
   "authors": [
     {
