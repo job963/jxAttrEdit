@@ -8,15 +8,17 @@ Changes field values are marked with a different color for visualizing which of 
 
 If the product has variants you can switch to another variant or to the parent without choosing the main tab.
 
-Tested with OXID versions 4.7, 4.8, 4.9 and 4.10. 
+Tested with OXID versions 4.7 - 4.10 and 6.x 
+
+This fork allows multiselection of attribut values which are translated to a comma-separated list in the oxid 6 version.
 
 ## Install
 
-```composer require proudcommerce/jxattredit```
+```composer require zunderweb/oxid-jxattredit```
 
 
 ### Screenshot ###
-![](https://github.com/job963/jxAttrEdit/raw/develop/docs/img/editattributes.jpg)
+![](https://github.com/leofonic/jxAttrEdit/raw/multiselect/editattributes.jpg)
 
 
 ### History ###
@@ -35,4 +37,4 @@ Tested with OXID versions 4.7, 4.8, 4.9 and 4.10.
   * Highlighting of basket attributes
 
 * **Release 1.0.0**
-  * Migration to OXID 6
+  * Migration to OXID 6, multiselect added
