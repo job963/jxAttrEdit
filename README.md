@@ -37,4 +37,7 @@ This fork allows multiselection of attribut values which are translated to a com
   * Highlighting of basket attributes
 
 * **Release 1.0.0**
-  * Migration to OXID 6, multiselect added
+  * Migration to OXID 6
+  
+* **Release 1.1.0**
+  * Multiselect added
