@@ -16,7 +16,7 @@ $aModule = array(
         'en' => 'Attribute Editor for Products.'
     ],
     'thumbnail' => 'jxattredit.png',
-    'version' => '1.1.2',
+    'version' => '1.1.3',
     'author' => 'Joachim Barthel, ProudCommerce, Zunderweb',
     'url' => 'http://www.zunderweb.de',
     'email' => 'info@zunderweb.de',
