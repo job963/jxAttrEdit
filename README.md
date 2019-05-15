@@ -14,7 +14,7 @@ This fork allows multiselection of attribut values which are translated to a com
 
 ## Install
 
-```composer require zunderweb/oxid-jxattredit```
+```composer require proudcommerce/jxattredit```
 
 
 ### Screenshot ###
