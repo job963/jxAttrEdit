@@ -1,5 +1,0 @@
-Unzip the complete file with all the folder structures and upload the content of the folder copy_this to the root folder of your shop.
-
-After this navigate in the admin backend of the shop to "Extension - Modules". Select the module and click on "Activate".
-
-If you switch to products and select a product, you will see the the new tab "Attibute Editor".
