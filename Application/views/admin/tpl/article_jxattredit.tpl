@@ -38,7 +38,31 @@ function switchVariant(obj)
     oSearch.oxid.value=obj.value;
     oSearch.submit();
 }
-
+function fillAttrValues(checkbox){
+    var input = document.getElementById(checkbox.dataset.attr);
+    var parent = checkbox.closest(".attrvals");
+    var allattrs = parent.querySelectorAll(".attrval");
+    var checkedattrs = [].filter.call( allattrs, function( el ) {
+       return el.checked;
+    });
+    var retvalue = '';
+    for (var i = 0; i < checkedattrs.length; ++i){
+        if (i) retvalue += ', ';
+        retvalue += checkedattrs[i].value;
+    }
+    input.value = retvalue;
+    input.onchange();
+}
+function showAttributes(elementId){
+    var allattrvals = document.querySelectorAll(".attrvals");
+    [].forEach.call(allattrvals, function(e) {
+        e.style.display = 'none';
+    });
+    document.getElementById(elementId).style.display = 'block';
+}
+function hideAttributes(elementId){
+    document.getElementById(elementId).style.display = 'none';
+}
 //-->
 </script>
 
@@ -75,7 +99,7 @@ function switchVariant(obj)
     [{ assign var="txtWidth" value="15" }]
 [{/if}]
 [{ assign var="colCount" value="4" }]
-<form name="allattredit" id="allattredit" action="[{ $shop->selflink }]" method="post">
+<form name="allattredit" id="allattredit" action="[{ $shop->selflink }]" method="post" autocomplete="off">>
     [{ $shop->hiddensid }]
     <input type="hidden" name="editlanguage" value="[{ $editlanguage }]">
     <input type="hidden" name="cl" value="article_jxattredit">
@@ -129,17 +153,22 @@ function switchVariant(obj)
                         &nbsp;[{if $Attribute.oxdisplayinbasket}]<b>[{/if}][{ $Attribute.oxtitle }][{if $Attribute.oxdisplayinbasket}] *</b>[{/if}]&nbsp;&nbsp;
                     </td>
                     <td class="[{ $listclass }]">
-                        <input type="text" size="[{$txtWidth}]" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue|escape }]" 
-                               style="width:95%" onChange="[{$onChangeStyle}]">
+                        <input type="text" size="30" maxlength="255" id="attrval_[{$rownum}]" name="attrval_[{$rownum}]" value="[{ $Attribute.oxartvalue }]" 
+                               style="width:95%" onChange="[{$onChangeStyle}]" 
+                               onfocus="showAttributes('attrlist_[{$rownum}]')">
                     </td>
-                    <td class="[{ $listclass }]">
-                        <select style="width:95%;" onchange="document.getElementById('attrval_[{$rownum}]').value=this.options[this.selectedIndex].value;
-                            document.getElementById('attrval_[{$rownum}]').style.color='blue';document.getElementById('attrval_[{$rownum}]').style.fontWeight='bold';">
-                            <option value=""></option>
-                            [{foreach name=outer2 item=AttrValue from=$Attribute.oxvalues}]
-                                <option value="[{$AttrValue|escape}]">[{$AttrValue}]</option>
+                    <td class="[{ $listclass }] attrvals" id="attrlist_[{$rownum}]" 
+                    style="display: none; border-width: 1px; position: absolute; border-color: #666; 
+                    padding: 10px; margin-left: 3px;">
+                                
+                             [{foreach name=outer2 item=AttrValue from=$oView->splitAttributeValues($Attribute.oxvalues, $Attribute.oxartvalue)}]
+                                [{ assign var="attrvalnum" value=$attrvalnum+1 }]
+                                <div>
+                                <input class="attrval" data-attr="attrval_[{$rownum}]" type="checkbox" id="oxattrvalid_[{$rownum}]_[{$attrvalnum}]" 
+                                value="[{$AttrValue.value}]" onchange="fillAttrValues(this)" [{if $AttrValue.checked}]checked="checked"[{/if}]>
+                                <label for="oxattrvalid_[{$rownum}]_[{$attrvalnum}]">[{$AttrValue.value}]</label>
+                                </div>
                             [{/foreach}]
-                        </select>
                     </td>
                 </tr>
             [{/foreach}]

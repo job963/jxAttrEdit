@@ -161,12 +161,12 @@ class AttributeEdit extends AdminDetailsController
         for ($i = 0; $i <= $iRows; $i++) {
             $sValueID = $request->getRequestParameter("oxvalueid_$i");
             $sAttrID = $request->getRequestParameter("oxattrid_$i");
-            $sAttrValue = $oDb->quote($request->getRequestParameter("attrval_$i"));
+            $sAttrValue = $request->getRequestParameter("attrval_$i");
 
             $sSql = "";
 
             if (($sValueID != '') && ($sAttrValue != '')) {   //attribute exists and not empty value received --> update
-                $sSql = "UPDATE $sOxvObject2Attribute SET oxvalue=$sAttrValue WHERE oxid='$sValueID' ";
+                $sSql = "UPDATE $sOxvObject2Attribute SET oxvalue=" . $oDb->quote($sAttrValue) . " WHERE oxid='$sValueID' ";
             }
 
             if (($sValueID != '') && ($sAttrValue == '')) {   //attribute exists, but empty value --> delete from DB
@@ -175,7 +175,7 @@ class AttributeEdit extends AdminDetailsController
 
             if (($sValueID == '') && ($sAttrValue != '')) {   //attribute doesn't exists, value received --> insert new value
                 $sNewUid = Registry::getUtilsObject()->generateUID();
-                $sSql = "INSERT INTO $sOxvObject2Attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', $sAttrValue, 0)";
+                $sSql = "INSERT INTO $sOxvObject2Attribute (OXID, OXOBJECTID, OXATTRID, OXVALUE, OXPOS) VALUES ('$sNewUid', '$sOXID', '$sAttrID', " . $oDb->quote($sAttrValue) . ", 0)";
             }
 
             if (($sValueID == '') && ($sAttrValue == '')) {   //attribute doesn't exists, no value received --> do nothing
@@ -187,6 +187,29 @@ class AttributeEdit extends AdminDetailsController
                 $oDb->execute($sSql);
             }
         }
-
+    }
+    public function splitAttributeValues($aValues, $sCurrentValue){
+        $aTemp = array();
+        $aRet = array();
+        foreach ($aValues as $sVal){
+            $aParts = explode(', ', $sVal);
+            foreach ($aParts as $sPart){
+                $aTemp[$sPart] = $sPart;
+            }
+        }
+        sort($aTemp);
+        $aCurrentVals = explode(', ', $sCurrentValue);  
+        foreach ($aTemp as $sValue){
+            if ($sValue){
+                if (in_array($sValue, $aCurrentVals)){
+                    $aRet[$sValue]['checked'] = 1;
+                }
+                else{
+                    $aRet[$sValue]['checked'] = 0;
+                }
+                $aRet[$sValue]['value'] = $sValue;
+            }
+        }
+        return $aRet;
     }
 }
