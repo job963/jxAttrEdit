@@ -1,5 +1,5 @@
 {
-  "name": "zunderweb/oxid-jxattredit",
+  "name": "proudcommerce/jxattredit",
   "version": "1.1.3",
   "description": "jxAttrEdit - Product Attibute Editor",
   "type": "oxideshop-module",
@@ -26,9 +26,6 @@
       "role": "Developer"
     }
   ],
-  "support": {
-    "email": "info@zunderweb.de"
-  },
   "require": {
     "php": ">= 7.0"
   },
